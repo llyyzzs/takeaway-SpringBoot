@@ -47,7 +47,7 @@ public class ShoppingCartController {
         return Result.success(shoppingCartList);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/clean")
     @ApiOperation("清空购物车")
     public Result cleanShoppingCart(){
         log.info("开始清空购物车");

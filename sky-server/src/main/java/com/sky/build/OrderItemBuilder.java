@@ -16,10 +16,9 @@ import java.util.List;
 @Data
 public class OrderItemBuilder {
 
-    // 问题:你明明不是一个spring相关的类，但是这个类在构建对象时候，肯定会使用
-    // 到一些spring相关的内容
-    // 方式一、把当前这个类交给spring管理，直接就可以使用@Autowired 拿到这些要使用的mapper，或者是spring相关的内容
-    // 方式二、构造方法传参
+   /*  问题:你明明不是一个spring相关的类，但是这个类在构建对象时候，肯定会使用到一些spring相关的内容
+     方式一、把当前这个类交给spring管理，直接就可以使用@Autowired 拿到这些要使用的mapper，或者是spring相关的内容
+     方式二、构造方法传参*/
     private AddressBookMapper addressBookMapper;
     private ShoppingCartMapper cartMapper;
     private UserMapper userMapper;

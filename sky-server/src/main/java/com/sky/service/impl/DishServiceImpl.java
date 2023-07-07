@@ -178,6 +178,7 @@ public class DishServiceImpl implements DishService {
         }
         //如果不存在就存入redis
         redisTemplate.opsForValue().set(key,dishVOList);
+        redisTemplate.opsForHash();
         return dishVOList;
     }
 
