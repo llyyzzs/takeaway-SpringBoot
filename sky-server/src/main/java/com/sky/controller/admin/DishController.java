@@ -11,6 +11,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -22,6 +26,7 @@ import java.util.List;
 @RequestMapping("/admin/dish")
 @Api(tags = "菜品相关接口")
 @Slf4j
+@EnableCaching
 public class DishController {
     @Autowired
     DishService dishService;
@@ -35,6 +40,7 @@ public class DishController {
      */
     @PostMapping
     @ApiOperation("新增菜品")
+    @CachePut(cacheNames = "dish",key = "#dishDTO.id")
     public Result save (@RequestBody DishDTO dishDTO){
         log.info("新增菜品{}",dishDTO);
         dishService.save(dishDTO);
@@ -62,6 +68,7 @@ public class DishController {
      */
     @DeleteMapping
     @ApiOperation("批量删除菜品")
+    @CacheEvict(cacheNames = "dish",allEntries = true)
     public Result delete(@RequestParam List<Long> ids){
         log.info("菜品批量删除：{}", ids);
         dishService.delete(ids);
@@ -75,6 +82,7 @@ public class DishController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据id查询菜品")
+    @Cacheable(cacheNames = "dish",key = "#id")
     public Result<DishVO> getById(@PathVariable Long id){
         log.info("根据id查询菜品");
         DishVO dishVO=dishService.getByIdWithFlavor(id);
@@ -88,6 +96,7 @@ public class DishController {
      */
     @PutMapping
     @ApiOperation("修改菜品")
+    @CacheEvict(cacheNames = "dish",allEntries = true)
     public Result update(@RequestBody DishDTO dishDTO){
         log.info("修改菜品");
         dishService.updateWithFlavor(dishDTO);
@@ -102,6 +111,7 @@ public class DishController {
      */
     @GetMapping("/list")
     @ApiOperation("根据分类查询菜品")
+    @Cacheable(cacheNames = "dishfenlei",key = "#categoryId")
     public Result<List<Dish>> queryByCategoryId(Long categoryId){
         //构造redis中的key，规则：dish_分类id
         log.info("根据分类查询菜品{}",categoryId);

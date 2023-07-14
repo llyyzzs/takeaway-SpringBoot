@@ -7,6 +7,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,8 +37,10 @@ public class WebSocketServer {
      * @param message 客户端发送过来的消息
      */
     @OnMessage
-    public void onMessage(String message, @PathParam("sid") String sid) {
+    public void onMessage(String message, @PathParam("sid") String sid) throws IOException {
         System.out.println("收到来自客户端：" + sid + "的信息:" + message);
+        Session session = sessionMap.get(sid);
+        session.getBasicRemote().sendText(message);
     }
 
     /**

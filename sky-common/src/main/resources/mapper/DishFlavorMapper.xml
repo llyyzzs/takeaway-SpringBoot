@@ -29,8 +29,7 @@
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="generator.domain.DishFlavor" useGeneratedKeys="true">
         insert into dish_flavor
-        ( id,dish_id,name
-        ,value)
+        ( id,dish_id,name,value)
         values (#{id,jdbcType=BIGINT},#{dishId,jdbcType=BIGINT},#{name,jdbcType=VARCHAR}
         ,#{value,jdbcType=VARCHAR})
     </insert>

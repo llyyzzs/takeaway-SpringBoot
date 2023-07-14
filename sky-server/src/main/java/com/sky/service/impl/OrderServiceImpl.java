@@ -24,6 +24,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -184,7 +186,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @param outTradeNo
      */
-    public void paySuccess(String outTradeNo) {
+    public void paySuccess(String outTradeNo) throws IOException {
         // 当前登录用户id
         Long userId = BaseContext.getCurrentId();
 
@@ -207,8 +209,8 @@ public class OrderServiceImpl implements OrderService {
         map.put("content", "订单号：" + outTradeNo);
 
         //通过WebSocket实现来单提醒，向客户端浏览器推送消息
+//        webSocketServer.onMessage(new String(String.valueOf(orders.getId())),JSON.toJSONString(map));
         webSocketServer.sendToAllClient(JSON.toJSONString(map));
-        ///////////////////////////////////////////////////
     }
 
     @Override

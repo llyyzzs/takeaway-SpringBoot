@@ -8,6 +8,7 @@ import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface OrderService {
@@ -23,7 +24,7 @@ public interface OrderService {
      * 支付成功，修改订单状态
      * @param outTradeNo
      */
-    void paySuccess(String outTradeNo);
+    void paySuccess(String outTradeNo) throws IOException;
 
     PageResult checkHistoryOrders(OrdersPageQueryDTO ordersPageQueryDTO);
 

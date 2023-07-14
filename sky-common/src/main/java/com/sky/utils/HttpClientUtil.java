@@ -90,7 +90,6 @@ public class HttpClientUtil {
         try {
             // 创建Http Post请求
             HttpPost httpPost = new HttpPost(url);
-
             // 创建参数列表
             if (paramMap != null) {
                 List<NameValuePair> paramList = new ArrayList();
@@ -137,7 +136,6 @@ public class HttpClientUtil {
         try {
             // 创建Http Post请求
             HttpPost httpPost = new HttpPost(url);
-
             if (paramMap != null) {
                 //构造json格式数据
                 JSONObject jsonObject = new JSONObject();
