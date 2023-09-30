@@ -13,9 +13,7 @@ import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
-import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
-import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import org.springframework.beans.BeanUtils;
@@ -37,7 +35,7 @@ public class DishServiceImpl implements DishService {
     @Autowired
     DishFlavorMapper dishFlavorMapper;
     @Autowired
-    RedisTemplate redisTemplate;
+    RedisTemplate<String, List<DishVO>> redisTemplate;
 
     @Transactional
     @Override
@@ -158,7 +156,7 @@ public class DishServiceImpl implements DishService {
     public List<DishVO> listWithFlavor(Dish dish) {
         String key="dish_"+dish.getCategoryId();
         //查询redis中是否存在菜品数据
-        List<DishVO> list= (List<DishVO>) redisTemplate.opsForValue().get(key);
+        List<DishVO> list= redisTemplate.opsForValue().get(key);
         if (list!=null && list.size()>0){
             //存在就直接输出
             return list;
@@ -190,7 +188,7 @@ public class DishServiceImpl implements DishService {
      * @param pattern
      */
     private void cleanCache(String pattern){
-        Set keys = redisTemplate.keys(pattern);
+        Set<String> keys = redisTemplate.keys(pattern);
         redisTemplate.delete(keys);
     }
 }

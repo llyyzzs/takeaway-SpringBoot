@@ -235,7 +235,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderVO checkOrderDetail(Long id) {
-        List<OrderDetail> detailList=orderDetailMapper.queryByDishId(id);
+        List<OrderDetail> detailList=orderDetailMapper.queryByOrderId(id);
         Orders orders=orderMapper.queryById(id);
         OrderVO orderVO = new OrderVO();
         BeanUtils.copyProperties(orders,orderVO);

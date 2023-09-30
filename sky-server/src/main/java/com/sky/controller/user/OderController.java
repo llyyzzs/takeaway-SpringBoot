@@ -78,7 +78,7 @@ public class OderController {
 
 
 
-    @PutMapping("/repetition/{id}")
+    @PostMapping("/repetition/{id}")
     @ApiOperation("再来一单")
     public Result orderAgain(@PathVariable Long id){
         log.info("再来一单");
